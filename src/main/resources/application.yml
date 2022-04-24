@@ -1,0 +1,45 @@
+server:
+  port: 8888
+
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  application:
+    name: configServer
+  cloud:
+    stream:
+      function:
+        definition: eventBuzz1Consumer;eventBuzz2Consumer #fizzBuzzProducer;fizzBuzzProcessor;fizzBuzzConsumer;fizzTestProducer;fizzTest1Consumer;fizzTest2Consumer
+      bindings:
+#        fizzBuzzProducer-out-0:
+#          destination: numbers
+#        fizzTestProducer-out-0:
+#          destination: tests-buzz
+#
+#        fizzBuzzProcessor-in-0:
+#          destination: numbers
+#        fizzBuzzProcessor-out-0:
+#          destination: fizz-buzz
+#        fizzBuzzConsumer-in-0:
+#          destination: fizz-buzz
+
+        eventBuzz1Consumer-in-0:
+          destination: event-buzz
+        eventBuzz2Consumer-in-0:
+          destination: event-buzz
+    config:
+      server:
+        git:
+          skipSslValidation: true
+          uri: https://github.com/zcaiobs/spring-cloud-config
+          username: ${USER_GIT}
+          password: ${ACCESS_TOKEN_GIT}
+
+logging:
+  level:
+    web: DEBUG
+
+
